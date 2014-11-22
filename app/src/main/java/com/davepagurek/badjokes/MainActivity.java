@@ -1,12 +1,16 @@
 package com.davepagurek.badjokes;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.util.Log;
 
+import android.transition.Transition;
+import android.transition.Explode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +37,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.view.Window;
+
 import com.davepagurek.badjokes.GetJSONTask;
 
 
@@ -45,6 +51,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //set the transition
+        Transition ts = new Explode();
+        ts.setStartDelay(2000);
+        //set the duration
+        ts.setDuration(5000);
+        getWindow().setEnterTransition(ts);
+        getWindow().setExitTransition(ts);
+
         setContentView(R.layout.activity_main);
 
         Log.wtf("test", "got here 0");
@@ -59,15 +75,15 @@ public class MainActivity extends Activity {
 
         String url = URL_GET_JOKE + "?last=" + last;
 
-
         GetJSONTask request = new GetJSONTask();
-
-        Log.wtf("test", "got here 1");
 
         request.setCallbackInstance(this);
         request.execute(url);
+    }
 
-        Log.wtf("test", "got here 2");
+    public void launchJoke(String q, String a) {
+        Intent intent = new Intent(this, JokeActivity.class);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
 

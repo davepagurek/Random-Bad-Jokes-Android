@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import android.util.Log;
 
+import android.transition.Slide;
+import android.transition.Transition;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -104,11 +106,7 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
             String q = result.getString("q");
             String a = result.getString("a");
 
-            Log.wtf("info", q);
-            Log.wtf("info", a);
-
-            TextView mainText = (TextView) main.findViewById(R.id.main_text);
-            mainText.setText(q + "\n" + a);
+            main.launchJoke(q, a);
 
         } catch (JSONException e) {
             e.printStackTrace();

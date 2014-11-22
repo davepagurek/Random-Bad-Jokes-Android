@@ -105,8 +105,9 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
         try {
             String q = result.getString("q");
             String a = result.getString("a");
+            int id = result.getInt("id");
 
-            main.launchJoke(q, a);
+            main.launchJoke(id, q, a);
 
         } catch (JSONException e) {
             e.printStackTrace();

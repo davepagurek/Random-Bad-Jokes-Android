@@ -7,25 +7,55 @@
     tools:context="com.davepagurek.badjokes.JokeActivity"
     android:background="#E1F5FE">
 
-    <TextView android:text="Test" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#311B92"
-        android:textSize="14pt"
-        android:id="@+id/q"
-        android:padding="2pt"
-        android:textStyle="bold" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/button">
 
-    <TextView
+    </ScrollView>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/a"
-        android:layout_below="@+id/q"
-        android:layout_centerHorizontal="true"
-        android:textColor="#311B92"
-        android:textSize="14pt"
-        android:padding="2pt" />
+        android:text="Random Joke"
+        android:id="@+id/button"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="randomJoke"
+        android:padding="4pt"
+        android:background="#311B92" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4pt"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+        <TextView android:text="Test" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#311B92"
+            android:textSize="14pt"
+            android:id="@+id/q"
+            android:padding="2pt"
+            android:textStyle="bold"
+            android:layout_above="@+id/a"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/a"
+            android:textColor="#311B92"
+            android:textSize="14pt"
+            android:padding="2pt"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
 
 </RelativeLayout>

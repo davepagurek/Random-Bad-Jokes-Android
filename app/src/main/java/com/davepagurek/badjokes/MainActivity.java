@@ -54,12 +54,12 @@ public class MainActivity extends Activity {
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         //set the transition
-        Transition ts = new Explode();
+        /*Transition ts = new Explode();
         ts.setStartDelay(2000);
         //set the duration
         ts.setDuration(5000);
         getWindow().setEnterTransition(ts);
-        getWindow().setExitTransition(ts);
+        getWindow().setExitTransition(ts);*/
 
         setContentView(R.layout.activity_main);
 
@@ -81,8 +81,11 @@ public class MainActivity extends Activity {
         request.execute(url);
     }
 
-    public void launchJoke(String q, String a) {
+    public void launchJoke(int id, String q, String a) {
+        last = id;
         Intent intent = new Intent(this, JokeActivity.class);
+        intent.putExtra("com.davepagurek.badjokes.q", q);
+        intent.putExtra("com.davepagurek.badjokes.a", a);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

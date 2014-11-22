@@ -1,11 +1,14 @@
 package com.davepagurek.badjokes;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -18,12 +21,21 @@ public class JokeActivity extends Activity {
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         //set the transition
-        Transition ts = new Slide();
-        ts.setDuration(300);
+
+        setContentView(R.layout.activity_joke);
+
+        Intent intent = getIntent();
+        String q = intent.getStringExtra("com.davepagurek.badjokes.q");
+        String a = intent.getStringExtra("com.davepagurek.badjokes.a");
+
+        setJoke(q, a);
+
+        Transition ts = new Explode();
+        ts.setDuration(500);
         getWindow().setEnterTransition(ts);
         getWindow().setExitTransition(ts);
 
-        setContentView(R.layout.activity_joke);
+
     }
 
     public void setJoke(String q, String a) {
@@ -32,6 +44,10 @@ public class JokeActivity extends Activity {
 
         TextView aText = (TextView) findViewById(R.id.a);
         aText.setText(a);
+    }
+
+    public void randomJoke(View view) {
+        finish();
     }
 
 

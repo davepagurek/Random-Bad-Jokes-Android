@@ -9,6 +9,9 @@
         <item name="android:colorPrimaryDark">#311B92</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">#D50000</item>
+
+        <!--<item name="android:background">#7986CB</item>-->
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
 </resources>

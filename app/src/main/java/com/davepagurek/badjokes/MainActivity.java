@@ -45,8 +45,14 @@ import com.davepagurek.badjokes.GetJSONTask;
 public class MainActivity extends Activity {
 
     public int last = -1;
-    public String URL_GET_JOKE = "http://davepagurek.com/badjokes/joke/";
-    public String URL_ADD_JOKE = "http://davepagurek.com/badjokes/add/";
+
+    public static final String JOKE_Q = "com.davepagurek.badjokes.q";
+    public static final String JOKE_A = "com.davepagurek.badjokes.a";
+    public static final int ACTIVITY_RETURN_VALUE = 0;
+    public static final String JOKE_RETURN_STATUS = "com.davepagurek.badjokes.returnstatus";
+    public static final int RANDOM_JOKE = 1;
+    public static String URL_GET_JOKE = "http://davepagurek.com/badjokes/joke/";
+    public static String URL_ADD_JOKE = "http://davepagurek.com/badjokes/add/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +69,11 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        Log.wtf("test", "got here 0");
+        randomJoke();
+    }
 
-        HttpResponse httpResponse = null;
-        HttpEntity httpEntity=null;
-        String json=null;
-        InputStream is = null;
-
-        String q = "";
-        String a = "";
-
-        String url = URL_GET_JOKE + "?last=" + last;
+    public void randomJoke() {
+        String url = MainActivity.URL_GET_JOKE + "?last=" + last;
 
         GetJSONTask request = new GetJSONTask();
 
@@ -84,9 +84,23 @@ public class MainActivity extends Activity {
     public void launchJoke(int id, String q, String a) {
         last = id;
         Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra("com.davepagurek.badjokes.q", q);
-        intent.putExtra("com.davepagurek.badjokes.a", a);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        intent.putExtra(MainActivity.JOKE_Q, q);
+        intent.putExtra(MainActivity.JOKE_A, a);
+        startActivityForResult(intent, MainActivity.ACTIVITY_RETURN_VALUE, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainActivity.ACTIVITY_RETURN_VALUE) {
+            if (resultCode == Activity.RESULT_OK) {
+                int status = data.getIntExtra(MainActivity.JOKE_RETURN_STATUS, -1);
+
+                if (status == MainActivity.RANDOM_JOKE) {
+                    randomJoke();
+                }
+            }
+        }
     }
 
 

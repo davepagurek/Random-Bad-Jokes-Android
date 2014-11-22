@@ -25,8 +25,8 @@ public class JokeActivity extends Activity {
         setContentView(R.layout.activity_joke);
 
         Intent intent = getIntent();
-        String q = intent.getStringExtra("com.davepagurek.badjokes.q");
-        String a = intent.getStringExtra("com.davepagurek.badjokes.a");
+        String q = intent.getStringExtra(MainActivity.JOKE_Q);
+        String a = intent.getStringExtra(MainActivity.JOKE_A);
 
         setJoke(q, a);
 
@@ -47,6 +47,9 @@ public class JokeActivity extends Activity {
     }
 
     public void randomJoke(View view) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(MainActivity.JOKE_RETURN_STATUS, MainActivity.RANDOM_JOKE);
+        setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
 

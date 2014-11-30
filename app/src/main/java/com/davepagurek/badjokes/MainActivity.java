@@ -44,7 +44,7 @@ import com.davepagurek.badjokes.GetJSONTask;
 
 public class MainActivity extends Activity {
 
-    public int last = -1;
+    public static int last = -1;
 
     public static final String JOKE_Q = "com.davepagurek.badjokes.q";
     public static final String JOKE_A = "com.davepagurek.badjokes.a";
@@ -73,12 +73,7 @@ public class MainActivity extends Activity {
     }
 
     public void randomJoke() {
-        String url = MainActivity.URL_GET_JOKE + "?last=" + last;
 
-        GetJSONTask request = new GetJSONTask();
-
-        request.setCallbackInstance(this);
-        request.execute(url);
     }
 
     public void launchJoke(int id, String q, String a) {

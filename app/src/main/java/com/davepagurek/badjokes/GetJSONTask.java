@@ -45,9 +45,9 @@ import org.json.JSONObject;
  * Created by dave_000 on 2014-11-21.
  */
 public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
-    MainActivity main;
+    JokeActivity main;
 
-    public void setCallbackInstance(MainActivity instance) {
+    public void setCallbackInstance(JokeActivity instance) {
         main = instance;
     }
 
@@ -92,6 +92,7 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
             object = new JSONObject(json);
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("json", json);
         }
 
         return object;
@@ -107,7 +108,7 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
             String a = result.getString("a");
             int id = result.getInt("id");
 
-            main.launchJoke(id, q, a);
+            main.setJoke(id, q, a);
 
         } catch (JSONException e) {
             e.printStackTrace();

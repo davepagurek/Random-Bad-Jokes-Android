@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.widget.TextView;
+import android.content.res.Configuration;
 
 import java.util.Random;
 import java.util.ArrayList;
@@ -30,11 +31,31 @@ public class JokeActivity extends Activity {
     public JokeFragment fragment;
     public ArrayList<Integer> colors = new ArrayList<Integer>();
     public View content;
-    public Integer lastBg = 0;
+    //public Integer MainActivity.LAST_BG = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //set the transition
+
+        setContentView(R.layout.activity_joke);
+
+        String url = MainActivity.URL_GET_JOKE + "?last=" + MainActivity.last;
+
+        content = getWindow().getDecorView().findViewById(android.R.id.content);
+
+        Transition ts = new Explode();
+        ts.setDuration(500);
+        getWindow().setEnterTransition(ts);
+        getWindow().setExitTransition(ts);
+
+        getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(getResources().getColor(R.color.background));
+
+        GetJSONTask request = new GetJSONTask();
+
+        request.setCallbackInstance(this);
 
         colors.add(getResources().getColor(R.color.c1));
         colors.add(getResources().getColor(R.color.c2));
@@ -46,29 +67,15 @@ public class JokeActivity extends Activity {
         colors.add(getResources().getColor(R.color.c8));
         colors.add(getResources().getColor(R.color.c9));
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        //set the transition
-
-        String url = MainActivity.URL_GET_JOKE + "?last=" + MainActivity.last;
-
-        setContentView(R.layout.activity_joke);
-        getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(getResources().getColor(R.color.background));
-
-        content = getWindow().getDecorView().findViewById(android.R.id.content);
-
-        Transition ts = new Explode();
-        ts.setDuration(500);
-        getWindow().setEnterTransition(ts);
-        getWindow().setExitTransition(ts);
-
-        GetJSONTask request = new GetJSONTask();
-
-        request.setCallbackInstance(this);
-        request.execute(url);
+        if(savedInstanceState == null) {
+            request.execute(url);
+        } else {
+            setJoke(MainActivity.last, MainActivity.CURRENT_Q, MainActivity.CURRENT_A, true);
+        }
 
     }
 
-    public void setJoke(int id, String q, String a) {
+    public void setJoke(int id, String q, String a, Boolean change) {
         MainActivity.last = id;
         /*FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -82,37 +89,59 @@ public class JokeActivity extends Activity {
         fragment = new JokeFragment();
         fragment.setQA(q, a);
 
-        getFragmentManager()
-                .beginTransaction()
+        if (change) {
+            getFragmentManager()
+                    .beginTransaction()
 
-                        // Replace the default fragment animations with animator resources representing
-                        // rotations when switching to the back of the card, as well as animator
-                        // resources representing rotations when flipping back to the front (e.g. when
-                        // the system Back button is pressed).
-                .setCustomAnimations(
-                        R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                    .replace(R.id.jokeContainer, fragment)
 
-                        // Replace any fragments currently in the container view with a fragment
-                        // representing the next page (indicated by the just-incremented currentPage
-                        // variable).
-                .replace(R.id.jokeContainer, fragment)
+                            // Add this transaction to the back stack, allowing users to press Back
+                            // to get to the front of the card.
+                    .addToBackStack(null)
 
-                        // Add this transaction to the back stack, allowing users to press Back
-                        // to get to the front of the card.
-                .addToBackStack(null)
+                            // Commit the transaction.
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
 
-                        // Commit the transaction.
-                .commit();
+                            // Replace the default fragment animations with animator resources representing
+                            // rotations when switching to the back of the card, as well as animator
+                            // resources representing rotations when flipping back to the front (e.g. when
+                            // the system Back button is pressed).
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+
+                            // Replace any fragments currently in the container view with a fragment
+                            // representing the next page (indicated by the just-incremented currentPage
+                            // variable).
+                    .replace(R.id.jokeContainer, fragment)
+
+                            // Add this transaction to the back stack, allowing users to press Back
+                            // to get to the front of the card.
+                    .addToBackStack(null)
+
+                            // Commit the transaction.
+                    .commit();
+
+            MainActivity.CURRENT_Q = q;
+            MainActivity.CURRENT_A = a;
+        }
+
 
 
         ColorDrawable bgcolor = (ColorDrawable) content.getBackground();
         Integer colorFrom = bgcolor.getColor();
         Integer colorTo = 0;
-        do {
-            colorTo = (colors.get(new Random().nextInt(colors.size())));
-        } while (colorTo.equals(lastBg));
-        lastBg = colorTo;
+        if (!change) {
+            do {
+                colorTo = (colors.get(new Random().nextInt(colors.size())));
+            } while (colorTo.equals(MainActivity.LAST_BG));
+            MainActivity.LAST_BG = colorTo;
+        } else {
+            colorTo = MainActivity.LAST_BG;
+        }
 
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
 

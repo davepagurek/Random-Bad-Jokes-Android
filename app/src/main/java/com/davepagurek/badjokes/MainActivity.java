@@ -54,6 +54,10 @@ public class MainActivity extends Activity {
     public static String URL_GET_JOKE = "http://davepagurek.com/badjokes/joke/";
     public static String URL_ADD_JOKE = "http://davepagurek.com/badjokes/add/";
 
+    public static String CURRENT_Q = "";
+    public static String CURRENT_A = "";
+    public static Integer LAST_BG = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -52,6 +52,7 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
     }
 
     protected JSONObject doInBackground(String... url) {
+        Boolean change = false;
         HttpResponse httpResponse = null;
         HttpEntity httpEntity=null;
         String json=null;
@@ -90,12 +91,13 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
         JSONObject object = new JSONObject();
         try {
             object = new JSONObject(json);
+
+            return object;
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("json", json);
         }
-
-        return object;
+        return null;
     }
 
     protected void onProgressUpdate(Integer... progress) {
@@ -107,8 +109,9 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
             String q = result.getString("q");
             String a = result.getString("a");
             int id = result.getInt("id");
+            //Boolean change = result.getBoolean("change");
 
-            main.setJoke(id, q, a);
+            main.setJoke(id, q, a, false);
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -70,10 +70,13 @@ public class GetTextTask extends AsyncTask<String, Void, String>  {
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return null;
         } catch (ClientProtocolException e) {
             e.printStackTrace();
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
 
         try {
@@ -87,8 +90,8 @@ public class GetTextTask extends AsyncTask<String, Void, String>  {
             return sb.toString();
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
+            return null;
         }
-        return null;
     }
 
     protected void onProgressUpdate(Integer... progress) {

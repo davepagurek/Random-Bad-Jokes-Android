@@ -54,10 +54,11 @@ public class MainActivity extends Activity {
     public static String URL_GET_JOKE = "http://davepagurek.com/badjokes/joke/";
     public static String URL_ADD_JOKE = "http://davepagurek.com/badjokes/add/";
     public static String URL_FLAG_JOKE = "http://davepagurek.com/badjokes/flag.php";
+    public static String URL_VIEW_JOKE = "http://davepagurek.com/badjokes/";
 
     public static String CURRENT_Q = "";
     public static String CURRENT_A = "";
-    public static Integer LAST_BG = 0;
+    public static Integer LAST_COLOR = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

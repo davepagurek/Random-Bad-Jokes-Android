@@ -30,6 +30,13 @@ import java.util.ArrayList;
 
 public class JokeActivity extends Activity {
 
+    public static final Integer ADD_STATUS = 1;
+    public static final Integer STATUS_SUCCESS = 2;
+
+    public static Integer added_id = -1;
+    public static String added_q = "";
+    public static String added_a = "";
+
     public JokeFragment fragment;
     public ArrayList<Integer> colors = new ArrayList<Integer>();
     public View content;
@@ -65,6 +72,9 @@ public class JokeActivity extends Activity {
         colors.add(getResources().getColor(R.color.c4));
         colors.add(getResources().getColor(R.color.c5));
         colors.add(getResources().getColor(R.color.c6));
+        colors.add(getResources().getColor(R.color.c7));
+        colors.add(getResources().getColor(R.color.c8));
+        colors.add(getResources().getColor(R.color.c9));
 
 
         if(savedInstanceState == null) {
@@ -85,9 +95,19 @@ public class JokeActivity extends Activity {
         fragmentTransaction.add(R.id.jokeContainer, fragment);
         fragmentTransaction.commit();*/
 
+        Integer textColor = 0;
+        if (!change) {
+            do {
+                textColor = (colors.get(new Random().nextInt(colors.size())));
+            } while (textColor.equals(MainActivity.LAST_COLOR));
+            MainActivity.LAST_COLOR = textColor;
+        } else {
+            textColor = MainActivity.LAST_COLOR;
+        }
+
 
         fragment = new JokeFragment();
-        fragment.setQA(q, a);
+        fragment.setQA(q, a, textColor);
 
         if (change) {
             getFragmentManager()
@@ -133,15 +153,7 @@ public class JokeActivity extends Activity {
 
         ColorDrawable bgcolor = (ColorDrawable) content.getBackground();
         Integer colorFrom = bgcolor.getColor();
-        Integer colorTo = 0;
-        if (!change) {
-            do {
-                colorTo = (colors.get(new Random().nextInt(colors.size())));
-            } while (colorTo.equals(MainActivity.LAST_BG));
-            MainActivity.LAST_BG = colorTo;
-        } else {
-            colorTo = MainActivity.LAST_BG;
-        }
+        Integer colorTo = getResources().getColor(R.color.background_light);
 
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
 
@@ -195,7 +207,18 @@ public class JokeActivity extends Activity {
 
     public void flagResult(String result) {
         AlertDialog.Builder alert = new AlertDialog.Builder(content.getContext());
-        alert.setMessage(result);
+        if (result == null) {
+            alert.setMessage("Sorry, we could not connect to the bad jokes database.\nPlease check your network connection and try again later.");
+        } else {
+            alert.setMessage(result);
+        }
+        alert.setPositiveButton("OK", null);
+        alert.show();
+    }
+
+    public void connectionError() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(content.getContext());
+        alert.setMessage("Sorry, we could not connect to the bad jokes database.\nPlease check your network connection and try again later.");
         alert.setPositiveButton("OK", null);
         alert.show();
     }
@@ -219,7 +242,7 @@ public class JokeActivity extends Activity {
         if (id == R.id.action_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.URL_GET_JOKE + "?joke=" + MainActivity.last);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.URL_VIEW_JOKE + "?joke=" + MainActivity.last);
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
 
@@ -253,10 +276,26 @@ public class JokeActivity extends Activity {
         }
 
         if (id == R.id.action_add) {
+            AddActivity.callback_view = this;
             Intent intent = new Intent(this, AddActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, ADD_STATUS);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == ADD_STATUS) {
+
+            if (JokeActivity.added_id != -1) {
+                setJoke(JokeActivity.added_id, JokeActivity.added_q, JokeActivity.added_a, false);
+                JokeActivity.added_id = -1;
+                JokeActivity.added_q = "";
+                JokeActivity.added_a = "";
+            }
+        }
+    }
 }
+

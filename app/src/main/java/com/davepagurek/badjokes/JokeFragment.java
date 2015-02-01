@@ -16,22 +16,26 @@ public class JokeFragment extends Fragment {
     public View main;
     public String q = "";
     public String a = "";
+    public Integer color = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         main = inflater.inflate(R.layout.joke_fragment, container, false);
-        TextView qText = (TextView) main.findViewById(R.id.q);
+        TextView qText = (TextView) main.findViewById(R.id.qEdit);
         qText.setText(Html.fromHtml(q).toString());
+        qText.setTextColor(color);
 
-        TextView aText = (TextView) main.findViewById(R.id.a);
+        TextView aText = (TextView) main.findViewById(R.id.aEdit);
         aText.setText(Html.fromHtml(a).toString());
+        aText.setTextColor(color);
         // Inflate the layout for this fragment
         return main;
     }
 
-    public void setQA(String _q, String _a) {
+    public void setQA(String _q, String _a, Integer _color) {
         q=_q;
         a=_a;
+        color = _color;
     }
 }

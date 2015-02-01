@@ -33,7 +33,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -44,10 +43,12 @@ import org.json.JSONObject;
 /**
  * Created by dave_000 on 2014-11-21.
  */
-public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
-    JokeActivity main;
+public class PostJSONTask extends AsyncTask<String, Void, JSONObject>  {
+    AddActivity main;
+    String _q = "";
+    String _a = "";
 
-    public void setCallbackInstance(JokeActivity instance) {
+    public void setCallbackInstance(AddActivity instance) {
         main = instance;
     }
 
@@ -58,13 +59,21 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
         String json=null;
         InputStream is = null;
 
+        _q = url[1];
+        _a = url[2];
+
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(url[0]);
+            HttpPost httpPost = new HttpPost(url[0]);
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("question", _q));
+            nameValuePairs.add(new BasicNameValuePair("answer", _a));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             Log.wtf("test", url[0]);
 
-            httpResponse = httpClient.execute(httpGet);
+            httpResponse = httpClient.execute(httpPost);
             httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
 
@@ -109,17 +118,22 @@ public class GetJSONTask extends AsyncTask<String, Void, JSONObject>  {
 
     protected void onPostExecute(JSONObject result) {
         if (result == null) {
-            main.connectionError();
-
+            main.error("connection");
             return;
         }
         try {
-            String q = result.getString("q");
-            String a = result.getString("a");
-            int id = result.getInt("id");
-            //Boolean change = result.getBoolean("change");
+            String status = result.getString("status");
 
-            main.setJoke(id, q, a, false);
+            Log.e("test", status);
+
+            if (status.equals("success")) {
+                int id = result.getInt("id");
+                //Boolean change = result.getBoolean("change");
+
+                main.success(id, _q, _a);
+            } else {
+                main.error(status);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();

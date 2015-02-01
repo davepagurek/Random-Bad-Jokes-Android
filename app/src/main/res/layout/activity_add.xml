@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.davepagurek.badjokes.AddActivity"
-    android:background="#ffffffff">
+    android:background="@color/background_light"
+    android:id="@+id/addView">
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
-        android:layout_above="@+id/q"
+        android:layout_above="@+id/qEdit"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
@@ -31,7 +32,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/q"
+                android:id="@+id/qEdit"
                 android:layout_below="@+id/textView"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true" />
@@ -42,14 +43,14 @@
                 android:text="Answer:"
                 android:id="@+id/textView2"
                 android:textSize="10pt"
-                android:layout_below="@+id/q"
+                android:layout_below="@+id/qEdit"
                 android:layout_alignParentStart="true"
                 android:paddingTop="8pt" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/a"
+                android:id="@+id/aEdit"
                 android:layout_below="@+id/textView2"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true" />
@@ -58,7 +59,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_below="@+id/a"
+                android:layout_below="@+id/aEdit"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10pt">
 
@@ -71,7 +72,9 @@
                     android:padding="8pt"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="53dp" />
+                    android:layout_marginStart="53dp"
+                    android:enabled="false"
+                    android:onClick="submit" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -82,7 +85,8 @@
                     android:padding="8pt"
                     android:layout_alignTop="@+id/submit"
                     android:layout_toEndOf="@+id/submit"
-                    android:onClick="cancel" />
+                    android:onClick="cancel"
+                    android:enabled="true" />
 
             </LinearLayout>
 

@@ -65,9 +65,7 @@ public class JokeActivity extends Activity {
         colors.add(getResources().getColor(R.color.c4));
         colors.add(getResources().getColor(R.color.c5));
         colors.add(getResources().getColor(R.color.c6));
-        colors.add(getResources().getColor(R.color.c7));
-        colors.add(getResources().getColor(R.color.c8));
-        colors.add(getResources().getColor(R.color.c9));
+
 
         if(savedInstanceState == null) {
             request.execute(url);
@@ -255,7 +253,8 @@ public class JokeActivity extends Activity {
         }
 
         if (id == R.id.action_add) {
-
+            Intent intent = new Intent(this, AddActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

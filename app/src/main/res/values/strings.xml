@@ -7,7 +7,7 @@
     <string name="action_flag">Flag as Inappropriate</string>
     <string name="action_add">Add Joke</string>
     <string name="title_activity_joke">Bad Jokes</string>
-    <string name="title_activity_add">AddActivity</string>
+    <string name="title_activity_add">Add Joke</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -4,8 +4,10 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -193,6 +195,13 @@ public class JokeActivity extends Activity {
         finish();*/
     }
 
+    public void flagResult(String result) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(content.getContext());
+        alert.setMessage(result);
+        alert.setPositiveButton("OK", null);
+        alert.show();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,8 +218,44 @@ public class JokeActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.URL_GET_JOKE + "?joke=" + MainActivity.last);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
             return true;
+        }
+
+        if (id == R.id.action_flag) {
+            final JokeActivity instance = this;
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            GetTextTask request = new GetTextTask();
+
+                            request.setCallbackInstance(instance);
+                            request.execute(MainActivity.URL_FLAG_JOKE + "?joke=" + MainActivity.last);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(content.getContext());
+            builder.setMessage("Remember, flagging is intented only for things that aren't jokes, are offensive, or are spam.\nAre you sure you want to flag this?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+        }
+
+        if (id == R.id.action_add) {
+
         }
 
         return super.onOptionsItemSelected(item);

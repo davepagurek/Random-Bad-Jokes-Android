@@ -7,40 +7,20 @@
     tools:context="com.davepagurek.badjokes.JokeActivity"
     android:id="@+id/content">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/jokeContainer"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_above="@+id/button"
-        android:layout_alignParentEnd="true">
+        android:id="@+id/jokeContainer">
 
-        <!--<fragment android:name="com.davepagurek.badjokes.JokeFragment"
-            android:id="@+id/joke"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="4pt"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/joke_fragment" />-->
 
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="4pt"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+    </RelativeLayout>
 
-        </LinearLayout>-->
 
-    </ScrollView>
 
     <Button
         android:layout_width="wrap_content"

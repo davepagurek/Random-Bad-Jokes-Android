@@ -53,6 +53,7 @@ public class MainActivity extends Activity {
     public static final int RANDOM_JOKE = 1;
     public static String URL_GET_JOKE = "http://davepagurek.com/badjokes/joke/";
     public static String URL_ADD_JOKE = "http://davepagurek.com/badjokes/add/";
+    public static String URL_FLAG_JOKE = "http://davepagurek.com/badjokes/flag.php";
 
     public static String CURRENT_Q = "";
     public static String CURRENT_A = "";
@@ -118,9 +119,9 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

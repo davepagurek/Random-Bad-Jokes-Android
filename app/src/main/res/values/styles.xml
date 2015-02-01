@@ -4,11 +4,11 @@
     <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
-        <item name="android:colorPrimary">#7CB342</item>
+        <item name="android:colorPrimary">#4CAF50</item>
         <!--   darker variant for the status bar and contextual app bars -->
-        <item name="android:colorPrimaryDark">#558B2F</item>
+        <item name="android:colorPrimaryDark">#388E3C</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">#558B2F</item>
+        <item name="android:colorAccent">#388E3C</item>
 
         <!--<item name="android:background">#7986CB</item>-->
         <item name="android:windowBackground">@color/background</item>

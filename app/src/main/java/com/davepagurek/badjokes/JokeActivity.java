@@ -76,6 +76,8 @@ public class JokeActivity extends Activity {
         colors.add(getResources().getColor(R.color.c8));
         colors.add(getResources().getColor(R.color.c9));
 
+        MainActivity.DENSITY = getResources().getDisplayMetrics().density;
+
 
         if(savedInstanceState == null) {
             request.execute(url);
@@ -107,7 +109,7 @@ public class JokeActivity extends Activity {
 
 
         fragment = new JokeFragment();
-        fragment.setQA(q, a, textColor);
+        fragment.setQA(q, a, textColor, id);
 
         if (change) {
             getFragmentManager()

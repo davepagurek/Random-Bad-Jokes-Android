@@ -60,6 +60,8 @@ public class MainActivity extends Activity {
     public static String CURRENT_A = "";
     public static Integer LAST_COLOR = 0;
 
+    public static float DENSITY = 0f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,8 @@ public class MainActivity extends Activity {
         getWindow().setExitTransition(ts);*/
 
         setContentView(R.layout.activity_main);
+
+
 
         randomJoke();
     }

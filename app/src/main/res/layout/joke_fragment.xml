@@ -9,33 +9,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="4pt"
         android:layout_centerHorizontal="true">
-        <!-- android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_alignParentTop="true" -->
 
-        <TextView android:text="Test" android:layout_width="wrap_content"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="14pt"
-            android:id="@+id/qEdit"
-            android:padding="2pt"
-            android:textStyle="bold"
-            android:layout_above="@+id/aEdit"
+            android:orientation="vertical"
+            android:padding="10pt"
+            android:layout_margin="15dp"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal" />
+            android:elevation="4dp"
+            android:clipToPadding="false"
+            android:background="@drawable/shape"
+            android:id="@+id/card">
+            <!-- android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentTop="true" -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/aEdit"
-            android:textColor="#FFFFFF"
-            android:textSize="14pt"
-            android:padding="2pt"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal" />
+            <TextView android:text="Test" android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="14pt"
+                android:id="@+id/qEdit"
+                android:padding="2pt"
+                android:textStyle="bold"
+                android:layout_above="@+id/aEdit"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/aEdit"
+                android:textColor="#FFFFFF"
+                android:textSize="14pt"
+                android:padding="2pt"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
